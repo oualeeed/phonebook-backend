@@ -1,0 +1,18 @@
+# fly.toml file generated for konach-dyal-nwamer on 2023-07-02T13:44:54+01:00
+
+app = "konach-dyal-nwamer"
+primary_region = "mad"
+
+[env]
+  PORT = "8080" 
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+
+[checks]
+  [checks.alive]
+    type = "tcp"
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "5s"
