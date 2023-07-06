@@ -2,6 +2,8 @@ const cors = require("cors")
 const express = require("express")
 const morgan = require("morgan")
 const Person = require('./models/person.js')
+const person = require("./models/person.js")
+
 
 const app = express()
 
@@ -50,13 +52,10 @@ app.get('/api/persons/' , (request , response) => {
 })
 
 app.get('/api/persons/:id' ,(request , response )=> {
-  const id = Number(request.params.id)
-  const note = persons.find( person => person.id === id )
-  if(note){
-    response.json(note)
-  }else{
-    response.status(404).end()
-  }
+  const id = request.params.id
+  Person.findById(id).then( person => {
+    response.json(person)
+  })
 })
 
 app.delete('/api/persons/:id' ,(request , response )=> {
@@ -88,22 +87,16 @@ app.post('/api/persons' , (request, response)=>{
     })
   }
 
-  const identicallPerson = persons.find(person => person.name === body.name)
-  if(identicallPerson){
-    return response.status(400).json({
-      error : "This name is already in the database."
-    })
-  }
-
-  const person = {
-    id : generateId(),
+  const person = new Person({
     name : body.name, 
     number : body.number
-  }
+  })
 
-  persons = persons.concat(person)
-
-  response.json(person)
+  person.save().then(
+    person => {
+      response.json(person)
+    })
+    
 })
 
 const generateId = ()=> Math.floor(Math.random() * 100000)
