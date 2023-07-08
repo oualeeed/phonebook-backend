@@ -1,10 +1,10 @@
-# fly.toml file generated for konach-dyal-nwamer on 2023-07-02T13:44:54+01:00
+# fly.toml file generated for konach-dyal-nwamer on 2023-07-08T14:43:52+01:00
 
 app = "konach-dyal-nwamer"
 primary_region = "mad"
 
 [env]
-  PORT = "8080" 
+  PORT = "8080"
 
 [http_service]
   internal_port = 8080
